@@ -21,15 +21,13 @@ export const headerLinks = [
   },
 ];
 
-export const eventDefaultValues = {
+export const jobDefaultValues = {
   title: "",
   description: "",
-  location: "",
   imageUrl: "",
   startDateTime: new Date(),
   endDateTime: new Date(),
-  categoryId: "",
-  price: "",
-  isFree: false,
+  locationId: "",
+  occupationId: "",
   url: "",
 };

@@ -10,6 +10,7 @@ export interface IEvent extends Document {
   endDateTime: Date;
   url?: string;
   location: { _id: string; name: string };
+  occupation: { _id: string; name: string };
   organizer: { _id: string; firstName: string; lastName: string };
 }
 
@@ -22,6 +23,7 @@ const JobSchema = new Schema({
   endDateTime: { type: Date, default: Date.now },
   url: { type: String },
   location: { type: Schema.Types.ObjectId, ref: "Location" },
+  Occupation: { type: Schema.Types.ObjectId, ref: "Occupation" },
   organizer: { type: Schema.Types.ObjectId, ref: "User" },
 });
 

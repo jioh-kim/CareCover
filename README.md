@@ -13,6 +13,8 @@ devDependencies:
 - tailwindcss
 - shadcn-ui for UI library
 - uploadthing 
+- Clerk for auth
+- Mongodb for db
 
 CSS
 - font - Petrona (google fonts)
