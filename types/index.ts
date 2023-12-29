@@ -99,8 +99,8 @@ export type Event = {
 };
 
 // ====== CATEGORY PARAMS
-export type CreateCategoryParams = {
-  categoryName: string;
+export type CreateLocationParams = {
+  locationName: string;
 };
 
 // ====== ORDER PARAMS
