@@ -20,7 +20,7 @@ const JobSchema = new Schema({
   startDateTime: { type: Date, default: Date.now },
   endDateTime: { type: Date, default: Date.now },
   location: { type: Schema.Types.ObjectId, ref: "Location" },
-  Occupation: { type: Schema.Types.ObjectId, ref: "Occupation" },
+  occupation: { type: Schema.Types.ObjectId, ref: "Occupation" },
   applicationDeadline: { type: Date, required: true },
   postedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });

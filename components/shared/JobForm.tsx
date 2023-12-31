@@ -66,8 +66,8 @@ const JobForm = ({ userId, type }: JobFormProps) => {
         })
 
         if (newJob) {
-          // form.reset();
-          // router.push("/jobs/${newJob.id}");
+          form.reset();
+          router.push(`/jobs/${newJob._id}`);
           console.log(newJob)
         }
 
