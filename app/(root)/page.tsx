@@ -1,8 +1,26 @@
 import { Button } from "@/components/ui/button";
+import Collection from "@/components/shared/Collection";
 import Image from "next/image";
 import Link from "next/link";
+import { getAllJobs } from "@/lib/actions/job.actions";
+import { eventListeners } from "@popperjs/core";
+import Search from "@/components/shared/Search";
+import LocationFilter from "@/components/shared/LocationFilter";
+import OccupationFilter from "@/components/shared/OccupationFilter";
 
-export default function Home() {
+
+export default async function Home() {
+
+  const jobs = await getAllJobs({
+    query: '',
+    location: '',
+    occupation: '',
+    page: 1,
+    limit: 6
+  })
+  
+  console.log(jobs)
+
   return (
     <>
       <section className="bg-slate-200 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -31,6 +49,30 @@ export default function Home() {
             className="max-h-[70vh] object-contain object-center 2xl:max-h-[50vh]"
           />
         </div>
+      </section>
+
+      <section
+        id="events"
+        className="wrapper my-8 flex flex-col gap-8 md:gap-12"
+      >
+        <h2 className="h2-bold">
+          Trust by Thousands of Healthcare Professionals
+        </h2>
+
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          <Search />
+          <LocationFilter />
+          <OccupationFilter />
+        </div>
+        <Collection
+          data={jobs?.data}
+          emptyTitle="No Job Postings Found"
+          emptyStateSubtext="Come back later!"
+          collectionType="All_Jobs"
+          limit={6}
+          page={1}
+          totalPages={2}
+        />
       </section>
     </>
   );

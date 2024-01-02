@@ -82,7 +82,7 @@ const OccupationDropdown = ({
               <AlertDialogDescription>
                 <Input
                   type="text"
-                  placeholder="Category name"
+                  placeholder="Occupation name"
                   className="input-field mt-3"
                   onChange={(e) => setNewOccupation(e.target.value)}
                 />

@@ -84,7 +84,7 @@ const LocationDropdown = ({
               <AlertDialogDescription>
                 <Input
                   type="text"
-                  placeholder="Category name"
+                  placeholder="Location name"
                   className="input-field mt-3"
                   onChange={(e) => setNewLocation(e.target.value)}
                 />
