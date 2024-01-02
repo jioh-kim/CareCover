@@ -162,7 +162,7 @@ export async function getJobsByUser({
   try {
     await connectToDatabase();
 
-    const conditions = { organizer: userId };
+    const conditions = { postedBy: userId };
     const skipAmount = (page - 1) * limit;
 
     const jobsQuery = Job.find(conditions)

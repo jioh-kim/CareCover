@@ -9,11 +9,11 @@ const UserSchema = new Schema({
   photo: { type: String, required: true },
   Occupation: { type: Schema.Types.ObjectId, ref: "Occupation" },
   professionalDetails: {
+    bio: { type: String, required: false },
     licenseNumber: { type: String, required: false },
     certifications: [{ type: String, required: false }],
     specialization: { type: String, required: false },
-    experienceYears: { type: Number, required: false },
-    bio: { type: String, required: false },
+    yearOfExp: { type: Number, required: false },
   },
 });
 

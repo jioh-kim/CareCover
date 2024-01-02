@@ -1,20 +1,27 @@
 import { IJob } from '@/lib/database/models/Job.model'
 import React from 'react'
 import Card from './Card'
+import Pagination from './Pagination'
 
 type CollectionProps = {
-    data: IJob[],
-    emptyTitle: string
-    emptyStateSubtext: string
-    collectionType?: 'All_Jobs' | 'Jobs_Applied' |'Jobs_Posted' 
-    limit: number
-    page: number | string
-    totalPages?: number
-    urlParamName?: string
-    }
+  data: IJob[];
+  emptyTitle: string;
+  emptyStateSubtext: string;
+  limit: number;
+  page: number | string;
+  totalPages?: number;
+  urlParamName?: string;
+  collectionType?: "Jobs_Posted" | "Jobs_Applied" | "All_Jobs";
+};
 
 const Collection = ({
-    data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages = 0, urlParamName,
+  data,
+  emptyTitle,
+  emptyStateSubtext,
+  page,
+  totalPages = 0,
+  collectionType,
+  urlParamName,
 }: CollectionProps) => {
   return (
     <>
@@ -23,12 +30,13 @@ const Collection = ({
           <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
             {data.map((job) => {
               const hasOrderLink = collectionType === "Jobs_Posted";
+            //   const hidePrice = collectionType === "Jobs_Applied";
 
               return (
                 <li key={job._id} className="flex justify-center">
                   <Card
                     job={job}
-                    // hasOrderLink={hasOrderLink}
+                    hasOrderLink={hasOrderLink}
                     // hidePrice={hidePrice}
                   />
                 </li>
@@ -36,13 +44,13 @@ const Collection = ({
             })}
           </ul>
 
-          {/* {totalPages > 1 && (
+          {totalPages > 1 && (
             <Pagination
               urlParamName={urlParamName}
               page={page}
               totalPages={totalPages}
             />
-          )} */}
+          )}
         </div>
       ) : (
         <div className="flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-grey-50 py-28 text-center">
@@ -52,6 +60,6 @@ const Collection = ({
       )}
     </>
   );
-}
+};
 
-export default Collection
+export default Collection;
