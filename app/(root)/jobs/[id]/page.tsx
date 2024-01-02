@@ -25,8 +25,14 @@ const JobDetails = async ({
                   </p>
                 </div>
 
+                <div className="flex gap-3">
+                  <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                    {job.occupation.name}
+                  </p>
+                </div>
+
                 <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
-                  by{" "}
+                  Posted by{" "}
                   <span className="text-primary-500">
                     {job.postedBy.firstName} {job.postedBy.lastName}
                   </span>
@@ -46,7 +52,8 @@ const JobDetails = async ({
                 />
                 <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center">
                   <p>
-                    {formatDateTime(job.startDateTime).dateOnly} - {formatDateTime(job.endDateTime).dateOnly} 
+                    {formatDateTime(job.startDateTime).dateOnly} -{" "}
+                    {formatDateTime(job.endDateTime).dateOnly}
                   </p>
                 </div>
               </div>
@@ -59,16 +66,15 @@ const JobDetails = async ({
                   height={32}
                 />
                 <p className="p-medium-16 lg:p-regular-20">
-                    Location: {job.location.name}
+                  Location: {job.location.name}
                 </p>
               </div>
 
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="p-bold-20 text-grey-600">Job description: </p>
+              <p className="p-bold-20 text-grey-600">Job Description: </p>
               <p className="p-medium-16 lg:p-regular-18">{job.description}</p>
-              
             </div>
           </div>
         </div>

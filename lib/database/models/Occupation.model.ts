@@ -7,6 +7,7 @@ export interface IOccupation extends Document {
 
 const OccupationSchema = new Schema({
   name: { type: String, required: true, unique: true },
+  count: { type: Number, default: 1 }, // Count of job postings associated with this occupation
 });
 
 const Occupation = models.Occupation || model("Occupation", OccupationSchema);

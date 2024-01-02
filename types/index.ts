@@ -30,68 +30,75 @@ export type CreateJobParams = {
   path: string;
 };
 
-export type UpdateEventParams = {
+export type UpdateJobParams = {
   userId: string;
-  event: {
+  job: {
     _id: string;
     title: string;
-    imageUrl: string;
     description: string;
-    location: string;
     startDateTime: Date;
     endDateTime: Date;
-    categoryId: string;
-    price: string;
-    isFree: boolean;
-    url: string;
+    applicationDeadline: Date;
+    occupationId: string;
+    locationId: string;
   };
   path: string;
 };
 
-export type DeleteEventParams = {
-  eventId: string;
+export type DeleteJobParams = {
+  jobId: string;
   path: string;
 };
 
-export type GetAllEventsParams = {
+export type GetAllJobsParams = {
   query: string;
-  category: string;
+  location: string;
+  occupation: string;
   limit: number;
   page: number;
 };
 
-export type GetEventsByUserParams = {
+export type GetJobsByUserParams = {
   userId: string;
   limit?: number;
   page: number;
 };
 
-export type GetRelatedEventsByCategoryParams = {
-  categoryId: string;
-  eventId: string;
+export type GetRelatedJobsByLocationParams = {
+  locationId: string;
+  jobId: string;
   limit?: number;
   page: number | string;
 };
 
-export type Event = {
+export type GetRelatedJobsByOccupationParams = {
+  occupationId: string;
+  jobId: string;
+  limit?: number;
+  page: number | string;
+};
+
+export type Job = {
   _id: string;
   title: string;
   description: string;
-  price: string;
-  isFree: boolean;
-  imageUrl: string;
-  location: string;
   startDateTime: Date;
   endDateTime: Date;
-  url: string;
+  applicationDeadline: Date;
   postedBy: {
     _id: string;
     firstName: string;
     lastName: string;
   };
-  category: {
+  location: {
     _id: string;
     name: string;
+    count: number;
+  };
+  occupation: {
+    _id: string;
+    name: string;
+    count: number;
   };
 };
 
@@ -108,8 +115,8 @@ export type CreateOccupationParams = {
 
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
-  eventTitle: string;
-  eventId: string;
+  jobTitle: string;
+  jobId: string;
   price: string;
   isFree: boolean;
   buyerId: string;
@@ -117,14 +124,14 @@ export type CheckoutOrderParams = {
 
 export type CreateOrderParams = {
   stripeId: string;
-  eventId: string;
+  jobId: string;
   buyerId: string;
   totalAmount: string;
   createdAt: Date;
 };
 
-export type GetOrdersByEventParams = {
-  eventId: string;
+export type GetOrdersByJobParams = {
+  jobId: string;
   searchString: string;
 };
 
