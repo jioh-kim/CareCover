@@ -3,18 +3,21 @@ import Collection from "@/components/shared/Collection";
 import Image from "next/image";
 import Link from "next/link";
 import { getAllJobs } from "@/lib/actions/job.actions";
-import { eventListeners } from "@popperjs/core";
 import Search from "@/components/shared/Search";
 import LocationFilter from "@/components/shared/LocationFilter";
 import OccupationFilter from "@/components/shared/OccupationFilter";
+import { SearchParamProps } from "@/types";
 
-
-export default async function Home() {
+export default async function Home({ searchParams}: SearchParamProps) {
+    const page = Number(searchParams?.page) || 1;
+    const searchText = (searchParams?.query as string) || "";
+    const location = (searchParams?.location as string) || "";
+    const occupation = (searchParams?.occupation as string) || "";
 
   const jobs = await getAllJobs({
-    query: '',
-    location: '',
-    occupation: '',
+    query: searchText,
+    location,
+    occupation,
     page: 1,
     limit: 6
   })
