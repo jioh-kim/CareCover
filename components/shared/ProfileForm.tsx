@@ -122,7 +122,7 @@ export function ProfileForm() {
               <FormControl>
                 <Input
                   type="number"
-                  placeholder="Price"
+                  placeholder="3"
                   {...field}
                   className="resize-none"
                 />
