@@ -12,7 +12,7 @@ const JobDetails = async ({
 
   return (
     <>
-      <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
+      <section className="flex justify-center bg-primary-50 bg-contain">
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
           <div className="flex w-full flex-col gap-8 p-5 md:p-10">
             <div className="flex flex-col gap-6">

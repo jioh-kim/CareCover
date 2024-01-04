@@ -23,10 +23,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
     <>
       {/* My Profile information */}
       {/* if getProfilebyUser is not null, return my profile information */}
-      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
-        <div className="wrapper flex items-center justify-center sm:justify-between">
-          <h3 className="h3-bold text-center sm:text-left">Create Profile</h3>
-        </div>
+      <section className="bg-slate-200 bg-cover bg-center py-5 md:py-5">
+        <h3 className="wrapper h3-bold text-center">My Profile</h3>
       </section>
       <section className="wrapper my-8">
         <ProfileForm
@@ -38,7 +36,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
       </section>
 
       {/* Jobs I posted */}
-      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
+      <section className="bg-slate-200 bg-cover bg-center py-5 md:py-5">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">My Jobs</h3>
           <Button asChild size="lg" className="button hidden sm:flex">
@@ -59,7 +57,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
         />
       </section>
       {/* Jobs I applied */}
-      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
+      <section className="bg-slate-200 bg-cover bg-center py-5 md:py-5">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">Applied Jobs</h3>
           <Button asChild size="lg" className="button hidden sm:flex">

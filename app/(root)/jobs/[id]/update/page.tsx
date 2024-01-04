@@ -16,7 +16,7 @@ const UpdateJob = async ({ params: {id} } : UpdateJobProps) => {
 
   return (
     <>
-      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
+      <section className="bg-slate-200 bg-cover bg-center py-5 md:py-5">
         <h3 className="wrapper h3-bold text-center">Update Job Posting</h3>
       </section>
 
