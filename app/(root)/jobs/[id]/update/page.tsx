@@ -1,20 +1,33 @@
 import JobForm from "@/components/shared/JobForm";
+import { getJobById } from "@/lib/actions/job.actions";
 import { auth } from "@clerk/nextjs";
 
-const UpdateJob = () => {
-  const { sessionClaims } = auth();
+interface UpdateJobProps {
+  params: {
+    id: string;
+  };
+}
 
+const UpdateJob = async ({ params: {id} } : UpdateJobProps) => {
+  const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
+  const job = await getJobById(id)
 
   return (
     <>
       <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
-        <h3 className="wrapper h3-bold text-center">Update Job</h3>
+        <h3 className="wrapper h3-bold text-center">Update Job Posting</h3>
       </section>
 
       <div className="wrapper my-8">
         {/* pass in userId, and type of "Update" to JobForm */}
-        <JobForm userId={userId} type="Update" />
+        <JobForm
+          type="Update"
+          job={job}
+          userId={userId}
+          jobId={job._id}
+        />
       </div>
     </>
   );

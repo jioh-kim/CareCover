@@ -78,7 +78,7 @@ export async function updateJob({ userId, job, path }: UpdateJobParams) {
     await connectToDatabase();
 
     const jobToUpdate = await Job.findById(job._id);
-    if (!jobToUpdate || jobToUpdate.organizer.toHexString() !== userId) {
+    if (!jobToUpdate || jobToUpdate.postedBy.toHexString() !== userId) {
       throw new Error("Unauthorized or job not found");
     }
 
@@ -153,7 +153,7 @@ export async function getAllJobs({
   }
 }
 
-// GET JOBS BY ORGANIZER
+// GET JOBS BY Postedby
 export async function getJobsByUser({
   userId,
   limit = 6,

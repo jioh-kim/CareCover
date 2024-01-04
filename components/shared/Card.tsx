@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { DeleteConfirmation } from "./DeleteConfirmation";
 // import { DeleteConfirmation } from "./DeleteConfirmation";
 
 type CardProps = {
@@ -26,11 +27,20 @@ const Card = ({ job, hasOrderLink, hidePrice }: CardProps) => {
       /> */}
 
       {/* IS EVENT CREATOR ... */}
-      {/* {isJobCreator && !hidePrice && (
+      {isJobCreator && !hidePrice && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
+          <Link href={`/jobs/${job._id}/update`}>
+            <Image
+              src="/assets/icons/edit.svg"
+              alt="edit"
+              width={20}
+              height={20}
+            />
+          </Link>
+
           <DeleteConfirmation jobId={job._id} />
         </div>
-      )} */}
+      )}
 
       <div className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4">
         {!hidePrice && (

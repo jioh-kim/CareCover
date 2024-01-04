@@ -30,21 +30,30 @@ import {
 } from "@/components/ui/popover";
 import { IJob } from "@/lib/database/models/Job.model";
 import { useRouter } from "next/navigation";
-import { createJob } from "@/lib/actions/job.actions";
+import { createJob, updateJob } from "@/lib/actions/job.actions";
+import { useState } from "react";
 
 
 type JobFormProps = {
-  userId: string;
-  type: "Create" | "Update";
-  job?: IJob,
+  userId: string
+  type: "Create" | "Update"
+  job?: IJob
   jobId?: string
 };
 
 
+const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
+  const [files, setFiles] = useState<File[]>([]);
 
-const JobForm = ({ userId, type }: JobFormProps) => {
+  const initialValues = job && type === 'Update'
+  ? {
+    ...job, 
+    startDateTime: new Date(job.startDateTime), 
+    endDateTime: new Date(job.endDateTime), 
+    applicationDeadline: new Date(job.applicationDeadline),
+  }
+  : jobDefaultValues;
 
-  const initialValues = jobDefaultValues;
   const router = useRouter();
 
   // 1. Define your form.
@@ -76,6 +85,28 @@ const JobForm = ({ userId, type }: JobFormProps) => {
         return JSON.parse(JSON.stringify(newJob));
       } catch (error) {
         console.log(error)
+      }
+    } 
+
+    if (type === 'Update') {
+
+      if(!jobId){
+        router.back()
+        return;
+      }
+      try {
+        const updatedJob = await updateJob({
+          userId,
+          job: { ...values, _id: jobId },
+          path: `/jobs/${jobId}`,
+        });
+
+        if (updatedJob) {
+          form.reset();
+          router.push(`/jobs/${updatedJob._id}`)
+        }
+      } catch (error) {
+        console.log(error);
       }
     } 
   }

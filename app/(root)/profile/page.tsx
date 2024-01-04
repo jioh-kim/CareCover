@@ -13,7 +13,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const userId = sessionClaims?.userId as string;
 
   const jobsPage = Number(searchParams?.jobsPage) || 1;
-
+  
   const organizedJobs = await getJobsByUser({ userId, page: jobsPage });
   console.log(organizedJobs);
 
