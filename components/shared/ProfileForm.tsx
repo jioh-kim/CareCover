@@ -14,15 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
-import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import OccupationDropdown from "./OccupationDropdown";
 import { Input } from "../ui/input";
 
@@ -32,7 +23,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { jobDefaultValues, profileDefaultValues } from "@/constants";
-import { createProfile } from "@/lib/actions/profile.actions";
+import { createProfile, updateProfile } from "@/lib/actions/profile.actions";
 import { IProfile } from "@/lib/database/models/Profile.model";
 
 const profileFormSchema = z.object({
@@ -49,16 +40,19 @@ const profileFormSchema = z.object({
 type ProfileFormProps = {
   userId: string;
   type: "Create" | "Update";
-  profile?: IProfile;
+  profileData?: IProfile;
   profileId?: string;
 };
 
-const ProfileForm = ({ userId, type }: ProfileFormProps) => {
-
-  console.log("user Id is", userId);
-
+const ProfileForm = ({ userId, type, profileData, profileId }: ProfileFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
-  const initialValues = profileDefaultValues;
+  const initialValues =
+    profileData && type == "Update"
+      ? {
+          ...profileData,
+        }
+      : profileDefaultValues;
+
   const router = useRouter();
 
   const { startUpload } = useUploadThing("fileUploader");
@@ -71,42 +65,49 @@ const ProfileForm = ({ userId, type }: ProfileFormProps) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof profileFormSchema>) {
-    const profileData = values;
-    console.log(profileData);
-
     let fileUrl = values.certificationUrl;
 
-    try {
-      const updatedProfileInfo = await createProfile({
-        profileDetails: { ...values },
-        userId,
-        path: "/profile",
-      });
+    if (type === "Create") {
+      try {
+        const profileInfo = await createProfile({
+          profileDetails: { ...values },
+          userId,
+          path: "/profile",
+        });
 
-      if (updatedProfileInfo) {
-        console.log("Information updated");
+        if (profileInfo) {
+          console.log("Information updated");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
 
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
+    if (type === "Update") {
+      try {
+        const updatedProfileInfo = await updateProfile({
+          userId,
+          profileDetails: { ...values, _id: profileId || "" },
+          path: "/profile",
+        });
+
+        if (updatedProfileInfo) {
+          router.refresh();
+          router.push(`/profile`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
     <>
-      <div>
+      <div className="flex-center flex flex-col gap-5 md:flex-row">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-2/3 space-y-6"
+            className="w-1/2 space-y-8"
           >
             {/* Bio */}
             <FormField

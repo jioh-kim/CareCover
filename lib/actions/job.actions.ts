@@ -153,7 +153,7 @@ export async function getAllJobs({
   }
 }
 
-// GET JOBS BY Postedby
+// GET JOBS BY POSTEDBY
 export async function getJobsByUser({
   userId,
   limit = 6,

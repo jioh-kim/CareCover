@@ -1,19 +1,22 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import User from "../database/models/User.model";
-import { GetProfileByUserParams, UpdateUserProfileParams } from "@/types";
+import {
+  CreateProfileParams,
+  GetProfileByUserParams,
+  UpdateProfileParams,
+} from "@/types";
 import { connectToDatabase } from "../database";
 import { handleError } from "../utils";
 import Profile from "../database/models/Profile.model";
 import Occupation from "../database/models/Occupation.model";
 
- 
-// UPDATE USER PROFILE
+// CREATE USER PROFILE
 export async function createProfile({
   profileDetails,
   userId,
   path,
-}: UpdateUserProfileParams) {
+}: CreateProfileParams) {
   try {
     await connectToDatabase();
 
@@ -33,6 +36,33 @@ export async function createProfile({
   }
 }
 
+// UPDATE
+export async function updateProfile({profileDetails, userId, path }: UpdateProfileParams) {
+  try {
+    await connectToDatabase();
+
+    const profileToUpdate = await Profile.findById(profileDetails._id);
+    if (!profileToUpdate || profileToUpdate.profileOwner.toHexString() !== userId) {
+      throw new Error("Unauthorized or profile not found");
+    }
+
+    const updatedProfile = await Profile.findByIdAndUpdate(
+      profileDetails._id,
+      {
+        ...profileDetails,
+        occupation: profileDetails.occupationId,
+      },
+      { new: true }
+    );
+    revalidatePath(path);
+
+    return JSON.parse(JSON.stringify(updatedProfile));
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+
 const populateProfile = (query: any) => {
   return query
     .populate({
@@ -43,14 +73,13 @@ const populateProfile = (query: any) => {
     .populate({ path: "occupation", model: Occupation, select: "_id name" });
 };
 
-
 // GET PROFILE BY USER ID
 export async function getProfileByUserId({ userId }: GetProfileByUserParams) {
   try {
     await connectToDatabase();
 
     const conditions = { profileOwner: userId };
-    const profilesQuery = Profile.find(conditions);
+    const profilesQuery = Profile.findOne(conditions);
     const profile = await populateProfile(profilesQuery);
 
     if (!profile || profile.length === 0) {

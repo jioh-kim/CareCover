@@ -15,18 +15,33 @@ export type UpdateUserParams = {
   photo: string;
 };
 
-export type UpdateUserProfileParams = {
+// ====== PROFILE PARAMS
+export type CreateProfileParams = {
   userId: string;
   profileDetails: {
     bio: string;
     licenseNumber: string;
     certificationsUrl?: string | undefined;
     yearOfExp: string;
+    occupationId: string;
   };
   path: string;
 };
 
-// ====== PROFILE PARAMS
+export type UpdateProfileParams = {
+  userId: string;
+  profileDetails: {
+    _id: string;
+    bio: string;
+    licenseNumber: string;
+    certificationsUrl?: string | undefined;
+    yearOfExp: string;
+    occupationId: string;
+  };
+  path: string;
+};
+
+
 export type GetProfileByUserParams = {
   userId: string;
 };

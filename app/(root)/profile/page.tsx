@@ -12,33 +12,29 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
+  const profileData = await getProfileByUserId({ userId });
+  // console.log("profileData", profileData);
+  // console.log("profileData", profileData?.data.bio);
+
   const jobsPage = Number(searchParams?.jobsPage) || 1;
-  
   const organizedJobs = await getJobsByUser({ userId, page: jobsPage });
-  console.log(organizedJobs);
 
   return (
     <>
       {/* My Profile information */}
-
-      {/* Create My Profile */}
+      {/* if getProfilebyUser is not null, return my profile information */}
       <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">Create Profile</h3>
         </div>
       </section>
       <section className="wrapper my-8">
-        <ProfileForm userId={userId} type="Create" />
-      </section>
-
-      {/* Edit My Profile */}
-      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
-        <div className="wrapper flex items-center justify-center sm:justify-between">
-          <h3 className="h3-bold text-center sm:text-left">Edit Profile</h3>
-        </div>
-      </section>
-      <section className="wrapper my-8">
-        <ProfileForm userId={userId} type="Create" />
+        <ProfileForm
+          userId={userId}
+          type="Update"
+          profileData={profileData?.data}
+          profileId={profileData?.data}
+        />
       </section>
 
       {/* Jobs I posted */}
@@ -50,7 +46,6 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           </Button>
         </div>
       </section>
-
       <section className="wrapper my-8">
         <Collection
           data={organizedJobs?.data}
@@ -63,7 +58,6 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           totalPages={organizedJobs?.totalPages}
         />
       </section>
-
       {/* Jobs I applied */}
       <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
         <div className="wrapper flex items-center justify-center sm:justify-between">
