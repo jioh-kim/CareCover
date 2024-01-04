@@ -15,6 +15,22 @@ export type UpdateUserParams = {
   photo: string;
 };
 
+export type UpdateUserProfileParams = {
+  userId: string;
+  profileDetails: {
+    bio: string;
+    licenseNumber: string;
+    certificationsUrl?: string | undefined;
+    yearOfExp: string;
+  };
+  path: string;
+};
+
+// ====== PROFILE PARAMS
+export type GetProfileByUserParams = {
+  userId: string;
+};
+
 // ====== Job PARAMS
 export type CreateJobParams = {
   userId: string;

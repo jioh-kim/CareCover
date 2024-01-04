@@ -2,11 +2,11 @@ import Collection from "@/components/shared/Collection";
 import ProfileForm from "@/components/shared/ProfileForm";
 import { Button } from "@/components/ui/button";
 import { getJobsByUser } from "@/lib/actions/job.actions";
+import { getProfileByUserId } from "@/lib/actions/profile.actions";
 import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
@@ -19,14 +19,26 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
 
   return (
     <>
-      {/* My Profile */}
+      {/* My Profile information */}
+
+      {/* Create My Profile */}
+      <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
+        <div className="wrapper flex items-center justify-center sm:justify-between">
+          <h3 className="h3-bold text-center sm:text-left">Create Profile</h3>
+        </div>
+      </section>
+      <section className="wrapper my-8">
+        <ProfileForm userId={userId} type="Create" />
+      </section>
+
+      {/* Edit My Profile */}
       <section className="bg-slate-200 bg-dotted-pattern bg-cover bg-center py-5 md:py-5">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">Edit Profile</h3>
         </div>
       </section>
       <section className="wrapper my-8">
-        <ProfileForm />
+        <ProfileForm userId={userId} type="Create" />
       </section>
 
       {/* Jobs I posted */}

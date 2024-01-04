@@ -22,7 +22,6 @@ export default async function Home({ searchParams}: SearchParamProps) {
     limit: 6
   })
   
-  console.log(jobs)
 
   return (
     <>

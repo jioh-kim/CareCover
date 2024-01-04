@@ -31,3 +31,12 @@ export const jobDefaultValues = {
   occupationId: "",
   url: "",
 };
+
+export const profileDefaultValues = {
+  bio: "",
+  occupationId: "",
+  licenseNumber: "",
+  certificationUrl: "",
+  yearOfExp: "",
+};
+

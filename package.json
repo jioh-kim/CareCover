@@ -20,7 +20,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
-    "@uploadthing/react": "^6.0.2",
+    "@uploadthing/react": "^6.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^3.0.6",
@@ -34,10 +34,11 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
+    "react-uploader": "^3.43.0",
     "svix": "^1.15.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.1.0",
+    "uploadthing": "^6.1.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -31,17 +31,19 @@ import {
 import { IJob } from "@/lib/database/models/Job.model";
 import { useRouter } from "next/navigation";
 import { createJob } from "@/lib/actions/job.actions";
-// 
+
 
 type JobFormProps = {
   userId: string;
   type: "Create" | "Update";
   job?: IJob,
   jobId?: string
-
 };
 
+
+
 const JobForm = ({ userId, type }: JobFormProps) => {
+
   const initialValues = jobDefaultValues;
   const router = useRouter();
 
@@ -53,9 +55,9 @@ const JobForm = ({ userId, type }: JobFormProps) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof jobFormSchema>) {
-    const jobData = values;
+    // const jobData = values;
 
-    console.log(jobData);
+    // console.log(jobData);
 
     if (type === "Create") {
       try {
@@ -81,6 +83,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
   return (
     <>
       <div>
+        {/* Occupation */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex flex-col gap-5 md:flex-row">
@@ -104,7 +107,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                 )}
               />
             </div>
-
+            {/* Location */}
             <div className="flex flex-col gap-5 md:flex-row">
               <FormField
                 control={form.control}
@@ -126,7 +129,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                 )}
               />
             </div>
-
+            {/* Title */}
             <div className="flex flex-col gap-5 md:flex-row">
               <FormField
                 control={form.control}
@@ -145,7 +148,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                 )}
               />
             </div>
-
+            {/* Description */}
             <div className="flex flex-col gap-5 md:flex-row">
               <FormField
                 control={form.control}
@@ -167,7 +170,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                 )}
               />
             </div>
-
+            {/* Start date time */}
             <div className="flex flex-col gap-5 md:flex-row">
               <FormField
                 control={form.control}
@@ -203,12 +206,11 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                         />
                       </PopoverContent>
                     </Popover>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
+              {/* End date time */}
               <FormField
                 control={form.control}
                 name="endDateTime"
@@ -248,7 +250,7 @@ const JobForm = ({ userId, type }: JobFormProps) => {
                 )}
               />
             </div>
-
+            {/* Application Deadline*/}
             <div className="flex flex-col gap-5 md:flex-row">
               <FormField
                 control={form.control}
