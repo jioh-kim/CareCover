@@ -40,3 +40,28 @@ export const profileDefaultValues = {
   yearOfExp: "",
 };
 
+export const footerLinks = [
+  {
+    title: "About",
+    links: [
+      { title: "How it works", url: "/" },
+      { title: "Who we are", url: "/" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { title: "Contact us", url: "/" },
+      { title: "About", url: "/" },
+      { title: "Terms of Services", url: "/" },
+      { title: "Partnership", url: "/" },
+    ],
+  },
+  {
+    title: "Socials",
+    links: [
+      { title: "Instagram", url: "/" },
+      { title: "Facebook", url: "/" },
+    ],
+  },
+];

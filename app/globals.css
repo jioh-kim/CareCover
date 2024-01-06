@@ -74,7 +74,7 @@
 }
 
 body {
-  font-family: var(--font-poppins)
+  font-family: var(--font-poppins);
 }
 
 .filter-grey {
@@ -228,6 +228,7 @@ body {
   .toggle-switch {
     @apply bg-gray-300 !important;
   }
+
 }
 
 /* ========================================== CLERK STYLES */
@@ -250,7 +251,7 @@ body {
 .cl-formButtonPrimary:hover,
 .cl-formButtonPrimary:focus,
 .cl-formButtonPrimary:active {
-  background-color: ##FACC15
+  background-color: ##facc15;
 }
 
 /* ========================================== REACT-DATEPICKER STYLES */
@@ -259,18 +260,18 @@ body {
 }
 
 .react-datepicker__input-container input {
-  background-color: transparent;
+  transparentbackground-color: ;
   width: 100%;
   outline: none;
   margin-left: 16px;
 }
 
 .react-datepicker__day--selected {
-  background-color: ##EAB308 !important;
+  background-color: ##eab308 !important;
   color: #ffffff !important;
   border-radius: 4px;
 }
 
 .react-datepicker__time-list-item--selected {
-  background-color: ##EAB308 !important;
+  background-color: ##eab308 !important;
 }

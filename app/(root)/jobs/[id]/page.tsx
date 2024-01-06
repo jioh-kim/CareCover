@@ -69,7 +69,6 @@ const JobDetails = async ({
                   Location: {job.location.name}
                 </p>
               </div>
-
             </div>
 
             <div className="flex flex-col gap-2">
