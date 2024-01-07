@@ -13,8 +13,12 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const userId = sessionClaims?.userId as string;
 
   const profileData = await getProfileByUserId({ userId });
-  // console.log("profileData", profileData);
-  // console.log("profileData", profileData?.data.bio);
+  console.log(profileData?.data)
+  console.log(profileData?.data?.profileOwner._id)
+
+  const userProfileExists = profileData?.data?.profileOwner._id === userId;
+  console.log(userProfileExists);
+
 
   const jobsPage = Number(searchParams?.jobsPage) || 1;
   const organizedJobs = await getJobsByUser({ userId, page: jobsPage });
@@ -29,7 +33,9 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
       <section className="wrapper my-8">
         <ProfileForm
           userId={userId}
-          type="Update"
+          type={
+             userProfileExists ? "Update" : "Create"
+          }
           profileData={profileData?.data}
           profileId={profileData?.data}
         />

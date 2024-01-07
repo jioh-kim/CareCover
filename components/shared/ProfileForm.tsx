@@ -25,6 +25,20 @@ import { useRouter } from "next/navigation";
 import { jobDefaultValues, profileDefaultValues } from "@/constants";
 import { createProfile, updateProfile } from "@/lib/actions/profile.actions";
 import { IProfile } from "@/lib/database/models/Profile.model";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const profileFormSchema = z.object({
   bio: z
@@ -44,7 +58,13 @@ type ProfileFormProps = {
   profileId?: string;
 };
 
-const ProfileForm = ({ userId, type, profileData, profileId }: ProfileFormProps) => {
+const ProfileForm = ({
+  userId,
+  type,
+  profileData,
+  profileId,
+}: ProfileFormProps) => {
+  console.log(type);
   const [files, setFiles] = useState<File[]>([]);
   const initialValues =
     profileData && type == "Update"
@@ -54,7 +74,7 @@ const ProfileForm = ({ userId, type, profileData, profileId }: ProfileFormProps)
       : profileDefaultValues;
 
   const router = useRouter();
-
+  const { toast } = useToast();
   const { startUpload } = useUploadThing("fileUploader");
 
   // 1. Define your form.
@@ -77,6 +97,7 @@ const ProfileForm = ({ userId, type, profileData, profileId }: ProfileFormProps)
 
         if (profileInfo) {
           console.log("Information updated");
+          router.refresh();
         }
       } catch (error) {
         console.log(error);
@@ -206,9 +227,36 @@ const ProfileForm = ({ userId, type, profileData, profileId }: ProfileFormProps)
               size="lg"
               disabled={form.formState.isSubmitting}
               className="w-full"
+              onClick={() => {
+                <AlertDialog>
+                  <AlertDialogTrigger>Open</AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>;
+              }}
             >
-              {form.formState.isSubmitting ? "Submitting..." : `Update Profile`}
+              {form.formState.isSubmitting
+                ? "Submitting..."
+                : type === "Create"
+                ? "Create Profile"
+                : "Update Profile"}
             </Button>
+
+
           </form>
         </Form>
       </div>
