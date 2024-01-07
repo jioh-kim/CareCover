@@ -11,6 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { jobFormSchema } from "@/lib/validator";
 import * as z from "zod";
@@ -20,7 +21,7 @@ import OccupationDropdown from "./OccupationDropdown";
 import { Textarea } from "../ui/textarea";
 // New components for date picker
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -31,7 +32,19 @@ import {
 import { IJob } from "@/lib/database/models/Job.model";
 import { useRouter } from "next/navigation";
 import { createJob, updateJob } from "@/lib/actions/job.actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// New components for map
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  Command,
+} from "@/components/ui/command";
+import usePlacesAutocomplete from "use-places-autocomplete";
 
 type JobFormProps = {
   userId: string;
@@ -41,8 +54,6 @@ type JobFormProps = {
 };
 
 const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
-  const [files, setFiles] = useState<File[]>([]);
-
   const initialValues =
     job && type === "Update"
       ? {
@@ -108,6 +119,44 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
     }
   }
 
+  // For Maps Autocomplete search for the form
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    callbackName: "YOUR_CALLBACK_NAME",
+    requestOptions: {
+      types: ["address"],
+    },
+    debounce: 300,
+  });
+
+  const handleSelect =
+    ({ description }: any) =>
+    () => {
+      // When the user selects a place, we can replace the keyword without request data from API by setting the second parameter to "false"
+      setValue(description, false);
+      setOpen(false);
+      clearSuggestions();
+    };
+
   return (
     <>
       <div className="flex-center flex flex-col gap-5 md:flex-row">
@@ -137,14 +186,13 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
               )}
             />
 
-            {/* Location */}
-
+            {/* City */}
             <FormField
               control={form.control}
               name="locationId"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Location</FormLabel>
+                  <FormLabel>City</FormLabel>
                   <FormControl>
                     <LocationDropdown
                       onChangeHandler={field.onChange}
@@ -154,6 +202,39 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                   {/* <FormDescription>
                     This is your public display name.
                   </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Clinic Address */}
+            <FormField
+              control={form.control}
+              name="clinicAddress"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Clinic Address</FormLabel>
+                  <Command>
+                    <CommandInput
+                      placeholder="716 Rainbow Street, Toronto, ON, Canada"
+                      value={value}
+                      onValueChange={setValue}
+                      disabled={!ready}
+                    />
+                    <CommandList>
+                      <CommandGroup>
+                        {status === "OK" &&
+                          data.map((suggestion) => (
+                            <CommandItem
+                              key={suggestion.place_id}
+                              onSelect={handleSelect(suggestion)}
+                            >
+                              {suggestion.description}
+                            </CommandItem>
+                          ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
                   <FormMessage />
                 </FormItem>
               )}
@@ -227,9 +308,6 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                     <FormControl>
                       <Input placeholder="Min" {...field} />
                     </FormControl>
-                    {/* <FormDescription>
-                    This is your public display name.
-                  </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -261,7 +339,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                 control={form.control}
                 name="startDateTime"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="flex flex-col flex-grow">
                     <FormLabel>Start Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -269,7 +347,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
+                              "flex-grow pl-3 text-left font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -300,7 +378,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                 control={form.control}
                 name="endDateTime"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col w-full">
+                  <FormItem className="flex flex-col flex-grow">
                     <FormLabel>End Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -308,7 +386,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
+                              "flex-grow pl-3 text-left font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -349,7 +427,8 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            //flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
+                            "flex pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
