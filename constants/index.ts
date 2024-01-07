@@ -29,6 +29,9 @@ export const jobDefaultValues = {
   applicationDeadline: new Date(),
   locationId: "",
   occupationId: "",
+  minPay: "",
+  maxPay: "",
+  requirements: "",
   url: "",
 };
 

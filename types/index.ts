@@ -57,6 +57,9 @@ export type CreateJobParams = {
     applicationDeadline: Date;
     occupationId: string;
     locationId: string;
+    minPay: string;
+    maxPay: string;
+    requirements: string;
   };
   path: string;
 };
@@ -72,6 +75,9 @@ export type UpdateJobParams = {
     applicationDeadline: Date;
     occupationId: string;
     locationId: string;
+    minPay: string;
+    maxPay: string;
+    requirements: string;
   };
   path: string;
 };
@@ -116,6 +122,9 @@ export type Job = {
   startDateTime: Date;
   endDateTime: Date;
   applicationDeadline: Date;
+  minPay: string;
+  maxPay: string;
+  requirements: string;
   postedBy: {
     _id: string;
     firstName: string;

@@ -113,7 +113,10 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
       <div className="flex-center flex flex-col gap-5 md:flex-row">
         {/* Occupation */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 w-1/2"
+          >
             <FormField
               control={form.control}
               name="occupationId"
@@ -183,7 +186,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Job Description</FormLabel>
-                  <FormControl className="h-72">
+                  <FormControl className="h-60">
                     <Textarea
                       placeholder="Treating patients? etc, idk lol"
                       {...field}
@@ -196,6 +199,61 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                 </FormItem>
               )}
             />
+
+            {/* Requirements */}
+
+            <FormField
+              control={form.control}
+              name="requirements"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Job Requirements</FormLabel>
+                  <FormControl className="h-60">
+                    <Textarea placeholder="Insurance?" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Salary */}
+            <div className="flex flex-col gap-5 md:flex-row">
+              <FormField
+                control={form.control}
+                name="minPay"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Pay Range (Hourly)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Min" {...field} />
+                    </FormControl>
+                    {/* <FormDescription>
+                    This is your public display name.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <h2 className="h1 pt-10 px-5">—</h2>
+
+              <FormField
+                control={form.control}
+                name="maxPay"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel className="invisible">Max Pay range</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Max" {...field} />
+                    </FormControl>
+                    {/* <FormDescription>
+                    This is your public display name.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             {/* Start date time */}
             <div className="flex flex-col gap-5 md:flex-row">
