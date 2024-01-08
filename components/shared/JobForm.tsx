@@ -228,7 +228,10 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                           key={suggestion.place_id}
                           onSelect={() => {
                             handleSelect(suggestion)(); // Call handleSelect to update local state and clear suggestions
-                            form.setValue("clinicAddress", suggestion.description); // Update react-hook-form state
+                            form.setValue(
+                              "clinicAddress",
+                              suggestion.description
+                            ); // Update react-hook-form state
                           }}
                         >
                           {/* <Check
@@ -244,35 +247,12 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                       ))}
                     </CommandGroup>
                   </Command>
-                  {/* <Command>
-                    <CommandInput
-                      placeholder="716 Rainbow Street, Toronto, ON, Canada"
-                      value={value}
-                      onValueChange={setValue}
-                      disabled={!ready}
-                    />
-                    <CommandList>
-                      <CommandGroup>
-                        {status === "OK" &&
-                          data.map((suggestion) => (
-                            <CommandItem
-                              value={suggestion.description}
-                              key={suggestion.place_id}
-                              onSelect={handleSelect(suggestion)}
-                            >
-                              {suggestion.description}
-                            </CommandItem>
-                          ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command> */}
                   <FormMessage />
                 </FormItem>
               )}
             />
 
             {/* Title */}
-
             <FormField
               control={form.control}
               name="title"
@@ -291,7 +271,6 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
             />
 
             {/* Description */}
-
             <FormField
               control={form.control}
               name="description"
@@ -313,7 +292,6 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
             />
 
             {/* Requirements */}
-
             <FormField
               control={form.control}
               name="requirements"
@@ -444,8 +422,8 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                 )}
               />
             </div>
-            {/* Application Deadline*/}
 
+            {/* Application Deadline*/}
             <FormField
               control={form.control}
               name="applicationDeadline"
@@ -458,7 +436,6 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            //flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
                             "flex pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
@@ -502,10 +479,3 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
 };
 
 export default JobForm;
-function getGeocode(arg0: { address: any }) {
-  throw new Error("Function not implemented.");
-}
-
-function getLatLng(arg0: any): { lat: any; lng: any } {
-  throw new Error("Function not implemented.");
-}
