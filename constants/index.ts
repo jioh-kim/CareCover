@@ -33,6 +33,7 @@ export const jobDefaultValues = {
   maxPay: "",
   requirements: "",
   url: "",
+  clinicAddress: "",
 };
 
 export const profileDefaultValues = {

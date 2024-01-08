@@ -60,6 +60,7 @@ export type CreateJobParams = {
     minPay: string;
     maxPay: string;
     requirements: string;
+    clinicAddress: string;
   };
   path: string;
 };
@@ -78,6 +79,7 @@ export type UpdateJobParams = {
     minPay: string;
     maxPay: string;
     requirements: string;
+    clinicAddress: string;
   };
   path: string;
 };
@@ -125,6 +127,7 @@ export type Job = {
   minPay: string;
   maxPay: string;
   requirements: string;
+  clinicAddress: string;
   postedBy: {
     _id: string;
     firstName: string;

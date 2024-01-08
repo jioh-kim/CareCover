@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -221,11 +221,42 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                       onValueChange={setValue}
                       disabled={!ready}
                     />
+                    <CommandGroup>
+                      {data.map((suggestion) => (
+                        <CommandItem
+                          value={suggestion.description}
+                          key={suggestion.place_id}
+                          onSelect={() => {
+                            handleSelect(suggestion)(); // Call handleSelect to update local state and clear suggestions
+                            form.setValue("clinicAddress", suggestion.description); // Update react-hook-form state
+                          }}
+                        >
+                          {/* <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              suggestion.description === field.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          /> */}
+                          {suggestion.description}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                  {/* <Command>
+                    <CommandInput
+                      placeholder="716 Rainbow Street, Toronto, ON, Canada"
+                      value={value}
+                      onValueChange={setValue}
+                      disabled={!ready}
+                    />
                     <CommandList>
                       <CommandGroup>
                         {status === "OK" &&
                           data.map((suggestion) => (
                             <CommandItem
+                              value={suggestion.description}
                               key={suggestion.place_id}
                               onSelect={handleSelect(suggestion)}
                             >
@@ -234,7 +265,7 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
                           ))}
                       </CommandGroup>
                     </CommandList>
-                  </Command>
+                  </Command> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -471,3 +502,10 @@ const JobForm = ({ userId, type, job, jobId }: JobFormProps) => {
 };
 
 export default JobForm;
+function getGeocode(arg0: { address: any }) {
+  throw new Error("Function not implemented.");
+}
+
+function getLatLng(arg0: any): { lat: any; lng: any } {
+  throw new Error("Function not implemented.");
+}

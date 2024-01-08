@@ -17,4 +17,5 @@ export const jobFormSchema = z.object({
   occupationId: z.string(),
   minPay: z.string().min(0, "Minimum pay must be at least 0"),
   maxPay: z.string().min(0, "Maximum pay must be at least 0"),
+  clinicAddress: z.string().min(3, "Clinic address must be at least 3 characters"),
 });

@@ -11,6 +11,7 @@ export interface IJob extends Document {
   applicationDeadline: Date;
   minPay: string;
   maxPay: string;
+  clinicAddress: string;
   location: { _id: string; name: string };
   occupation: { _id: string; name: string };
   postedBy: { _id: string; firstName: string; lastName: string };
@@ -29,6 +30,7 @@ const JobSchema = new Schema({
   postedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
   minPay: { type: String },
   maxPay: { type: String },
+  clinicAddress: { type: String },
 });
 
 const Job = models.Job || model("Job", JobSchema);
